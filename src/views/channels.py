@@ -76,6 +76,9 @@ class ChannelsContainer(ScrollView):
                                                   self.landing_screen.display_conversation(_id))
             groups[group_name].add_widget(channel_name_row)
 
+    def Press_auth(self, instance):
+        print(str(instance))
+
     def add_new_channel(self, group_name):
         """
         Cette méthode permet d'ajouter un nouveau channel dans le groupe concerné.

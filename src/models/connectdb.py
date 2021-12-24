@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from src.config import config
 
 
 class ConnectError(Exception):
@@ -19,16 +20,14 @@ class ConnectToDb:
             :raise: Error if: -A connection Errors occurs
 
         """
-        certificate_path = "../../X509-cert-3909330471699738491.pem"
-        uri = "mongodb+srv://cluster0.nehju.mongodb.net/myFirstDatabase?authSource=" \
-              "%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority"
+        certificat_path = config.ROOT_DIR + "/2TL2-G3.pem"
+        uri = "mongodb+srv://cluster0.5i6qo.gcp.mongodb.net/ephecom?authSource=%24external&authMechanism=MONGODB-X509&" \
+              "retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
         try:
-            cluster = MongoClient(uri, tls=True, tlsCertificateKeyFile=certificate_path)
-            db1 = cluster["dbOo"]
-            users = db1["Users"]
-            messages = db1["Messages"]
+            cluster = MongoClient(uri, tls=True, tlsCertificateKeyFile=certificat_path)
+            db1 = cluster["ephecom-2TL2"]
+            messages = db1["messages"]
 
-            self.__users = users
             self.__db = db1
             self.__messages = messages
         except:
@@ -36,6 +35,7 @@ class ConnectToDb:
                                "An error has occurred while connecting to the database."
                                "\n\n-----------------------------")
 
+    @property
     def db(self):
         """Return an object that points to the database.
 
@@ -46,16 +46,6 @@ class ConnectToDb:
         return self.__db
 
     @property
-    def users(self):
-        """Return an object that points to the users document in the database.
-
-        PRE: -
-        POST:Returns the pointer Object
-
-        """
-        return self.__users
-
-    @property
     def messages(self):
         """Return an object that points to the messages document in the database.
 
@@ -64,17 +54,6 @@ class ConnectToDb:
 
                 """
         return self.__messages
-
-    @property
-    def number_user(self):
-        """This returns the number of users in the database.
-
-        PRE: -
-        POST: Return the number of users present in the database
-
-        """
-        doc_count = self.__users.count_documents({})
-        return doc_count
 
     @property
     def number_message(self):

@@ -1,19 +1,29 @@
-from connectdb import ConnectToDb
+from src.models.connectdb import ConnectToDb
 from datetime import *
 
 
 class Message:
-    def __init__(self, data, user):
-        self.__data = data
+    def __init__(self, data, user, room):
+        self.data = data
         now = datetime.now()
         msg_date = now.strftime("%d/%m/%Y %H:%M")
-        self.__date = msg_date
-        self.__user = user
+        self.date = msg_date
+        self.user = user
+        self.room = room
+
+    def db_formatting(self):
+        return {
+            "room": self.room,
+            "timestamp": str(self.date),
+            "msg": self.data,
+            "sender": self.user
+        }
 
     def send_to_db(self):
         message = {
-            "data": self.__data,
-            "date": self.__date,
-            "user": self.__user
+            "room": self.room,
+            "data": self.data,
+            "date": self.date,
+            "user": self.user
         }
         ConnectToDb().messages.insert_one(message)
