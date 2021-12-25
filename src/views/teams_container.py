@@ -136,3 +136,7 @@ class TeamsContainer(ScrollView):
             return list_of_teams
 
         return None
+
+    @property
+    def get_data_from_db(self):
+        return self.data_from_db

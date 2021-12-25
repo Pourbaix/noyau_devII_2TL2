@@ -17,7 +17,7 @@ from src.config import config
 from src.libs.bot.commands import Commands
 from src.models.gen_message import Message
 from src.models.connectdb import ConnectToDb
-
+from src.views.teams_container import TeamsContainer
 
 Builder.load_file("{0}/conversation.kv".format(config.VIEWS_DIR))
 
@@ -56,9 +56,10 @@ class ConversationContainer(ScrollView):
         # conv_file_path = config.PUBLIC_DIR + "/tmp_conversations/basic.json"
         messages = ConnectToDb().messages
         print(conv_id)
+        for shit in TeamsContainer.get_data_from_db():
+            print(shit)
         if messages.find():
-            for thing in messages.find():
-                print(thing)
+            pass
         else:
             test = Message("testMessage", "User1", conv_id)
             test.send_to_db()
