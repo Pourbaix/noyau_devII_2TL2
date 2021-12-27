@@ -50,14 +50,15 @@ class LandingScreen(Screen):
         self.rooms_box.clear_widgets()
         self.rooms_box.add_widget(ChannelsContainer(team_channels))
 
-    def display_conversation(self, channel_id: str):
+    def display_conversation(self, channel_id: str, server_id):
         """
             [Base]
             Permet la mise à jour de la conversation active après un clic sur le nom d'un "Channel".
             :param channel_id: L'identifiant du "Channel" concerné sur 8 caractères.
+            :param server_id: L'identifiant du serveur
         """
         self.conv_box.clear_widgets()
-        conversation = Conversation(channel_id)
+        conversation = Conversation(channel_id, server_id)
         self.conv_box.add_widget(conversation)
 
     def set_teams_list(self):

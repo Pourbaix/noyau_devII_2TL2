@@ -40,43 +40,22 @@ class MessageReceived(MessageLabel):
 
 class ConversationContainer(ScrollView):
 
-    def __init__(self, channel_id):
+    def __init__(self, channel_id, server_id):
         super(ConversationContainer, self).__init__()
         self.channel_id = channel_id
+        self.server_id = server_id
         self.messages_box = self.ids.messages_container
 
         # Démarrer la mise à jour régulière de la conversation
-        self.constant_update(channel_id)
+        self.constant_update(channel_id, server_id)
 
-    def constant_update(self, channel_id):
-        self.init_conversation(channel_id)
+    def constant_update(self, channel_id, server_id):
+        self.init_conversation(channel_id, server_id)
         # time.sleep(1)
 
-    def init_conversation(self, conv_id):
-        # conv_file_path = config.PUBLIC_DIR + "/tmp_conversations/basic.json"
-        messages = ConnectToDb().messages
-        print(conv_id)
-        for shit in TeamsContainer.get_data_from_db():
-            print(shit)
-        if messages.find():
-            pass
-        else:
-            test = Message("testMessage", "User1", conv_id)
-            test.send_to_db()
-        """ 
-        with open(conv_file_path) as json_file:
-            conv = json.load(json_file)
-            if conv:
-                print("pas vide")
-            else:
-                print("vide")
-        """
+    def init_conversation(self, conv_id, server_id):
+        print(conv_id, server_id)
 
-        for message in messages.find():
-            print(message)
-            if message["room"] == conv_id:
-                msg = MessageSent(text=message["date"] + " - " + message["user"] + "\n" + message["data"])
-                self.messages_box.add_widget(msg, len(self.messages_box.children))
 
     def add_message(self, msg_obj, pos="left"):
         msg = MessageSent()
@@ -90,11 +69,12 @@ class ConversationContainer(ScrollView):
 
 class Conversation(RelativeLayout):
 
-    def __init__(self, channel_id):
+    def __init__(self, channel_id, server_id):
         super(Conversation, self).__init__()
-        self.messages_container = ConversationContainer(channel_id)
+        self.messages_container = ConversationContainer(channel_id, server_id)
         self.inputs_container = InputsContainer()
         self.channel = channel_id
+        self.server = server_id
 
         self.add_widget(self.messages_container)
         self.add_widget(self.inputs_container)
@@ -103,14 +83,14 @@ class Conversation(RelativeLayout):
         txt = self.inputs_container.ids.message_input.text
 
         if txt:
-            msg = Message(txt, "Moi", self.channel)
+            msg = Message(txt, "Moi", self.channel, self.server)
             self.messages_container.add_message(msg)
             msg.send_to_db()
 
             if txt[0] == "/":
                 bot = Commands(txt)
                 response_from_bot = bot.result
-                msg_res = Message(response_from_bot, "E-Bot", self.channel)
+                msg_res = Message(response_from_bot, "E-Bot", self.channel, self.server)
                 self.messages_container.add_message(msg_res, pos="right")
 
             self.inputs_container.ids.message_input.text = ""

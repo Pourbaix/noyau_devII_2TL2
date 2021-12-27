@@ -48,8 +48,8 @@ class TeamsContainer(ScrollView):
                     {"pseudo": "Jacques"},
                 ],
                 "channels": [
-                    Channel("abc1okDa", "My Channel 1", Group("akjIuY89", "Général")),
-                    Channel("1Oo0abdh", "My Channel 2", Group("akJhdgGa", "Profs"))
+                    Channel("xG7ab7d0", "Pis", "abc1okDa", "My Channel 1", Group("akjIuY89", "Général")),
+                    Channel("xG7ab7d0","Pis", "1Oo0abdh", "My Channel 2", Group("akJhdgGa", "Profs"))
                 ]
             },
             "0iIaJbL4": {
@@ -62,8 +62,8 @@ class TeamsContainer(ScrollView):
                     {"pseudo": "Jacques"},
                 ],
                 "channels": [
-                    Channel("abc1okDb", "My Channel 1", Group("akkIuY89", "Général")),
-                    Channel("1Oo0abdb", "My Channel 2", Group("akaIuY89", "Général"))
+                    Channel("0iIaJbL4", "Pan", "abc1okDb", "My Channel 1", Group("akkIuY89", "Général")),
+                    Channel("0iIaJbL4", "Pan", "1Oo0abdb", "My Channel 2", Group("akaIuY89", "Général"))
                 ]
             },
             "jdhTucB1": {
@@ -76,8 +76,8 @@ class TeamsContainer(ScrollView):
                     {"pseudo": "Jacques"},
                 ],
                 "channels": [
-                    Channel("abc1okDb", "My Channel 1", Group("akjvuY89", "Général")),
-                    Channel("1Oo0abdb", "My Channel 2", Group("akjIuv89", "Blabla"))
+                    Channel("jdhTucB1", "Douille", "abc1okDb", "My Channel 1", Group("akjvuY89", "Général")),
+                    Channel("jdhTucB1", "Douille", "1Oo0abdb", "My Channel 2", Group("akjIuv89", "Blabla"))
                 ]
             }
         }
@@ -140,3 +140,4 @@ class TeamsContainer(ScrollView):
     @property
     def get_data_from_db(self):
         return self.data_from_db
+
