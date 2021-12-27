@@ -52,14 +52,22 @@ class ConversationContainer(ScrollView):
         self.init_conversation()
         # time.sleep(1)
 
-    def init_conversation(self):
-        conv_file_path = config.PUBLIC_DIR + "/tmp_conversations/basic.json"
-        with open(conv_file_path) as json_file:
-            conv = json.load(json_file)
+    def init_conversation(self, channel_id, server_id):
+        # conv_file_path = config.PUBLIC_DIR + "/tmp_conversations/basic.json"
+        messages = ConnectToDb().messages
+        if messages.find():
+            pass
+        else:
+            test = Message("testMessage", "User1", channel_id, server_id)
+            test.send_to_db()
 
-        for message in conv["data"]:
-            msg = MessageSent(text=message["timestamp"] + " - " + message["sender"] + "\n" + message["msg"])
-            self.messages_box.add_widget(msg, len(self.messages_box.children))
+        for message in messages.find():
+
+            print(message)
+            if message["room"] == channel_id:
+                if message["server"] == server_id:
+                    msg = MessageSent(text=message["date"] + " - " + message["user"] + "\n" + message["data"])
+                    self.messages_box.add_widget(msg, len(self.messages_box.children))
 
     def add_message(self, msg_obj, pos="left"):
         msg = MessageSent()
